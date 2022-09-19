@@ -11,8 +11,6 @@ New-Item $progressFile  -ItemType "File" -ErrorAction SilentlyContinue
 $baseToolingFinished = Select-String -Path $progressFile $progressCheck
 
 if ($null -eq $baseToolingFinished){
-  Write-Host "Installing windows terminal"
-  choco upgrade microsoft-windows-terminal -y $common
   Write-Host "Installing Vredist 2015-2019"
   choco upgrade vcredist140 -y $common
   Write-Host "Installing git"
@@ -38,6 +36,9 @@ if ($null -eq $baseToolingFinished){
   Write-Host "Installing windirstat"
   choco upgrade windirstat -y $common
   
+  Write-Host "Finished setting up base tooling"
+    
+  Add-Content -Path $progressFile $progressCheck
 } else{
   Write-Host "Skipping $progressCheck installation, already done."
 }
